@@ -4,34 +4,51 @@
     {
         static void Main(string[] args)
         {
-            string szam = Console.ReadLine();
+
+            //Console.WriteLine(File.Exists("dolgozok.txt"));
+            Console.WriteLine(File.ReadAllText("dolgozok.txt"));
+            Dolgozok dolgozok = new Dolgozok();
+           // dolgozok.dolgozokListaja.Add(new string[] { "Nev", ";Kor", ";Elvegzett munkak szama", ";Fizetes" });
+            string szam = Console.ReadLine().Trim();
             if (szam == "1")
             {
-                Dolgozok dolgozok = new Dolgozok();
                 dolgozok.UjDolgozo();
             }
+            if (szam == "2")
+            {
+                dolgozok.Kiiratas();
+            }
+            Console.ReadKey();
         }
     }
 
 
     public class  Dolgozok
     {
-        static List<string[]> dolgozokListaja = new List<string[]>();
+       
 
+         //public List<string[]> dolgozokListaja = new List<string[]>();
          public void UjDolgozo()
-        {
+         {
+            bool ujFajl = !File.Exists("dolgozok.txt");
+
             Console.Write("Nev: ");
             string nev = Console.ReadLine();
-            foreach (var item in dolgozokListaja)
+            if (File.Exists("dolgozok.txt"))
             {
-                if (nev != item[0])
+                foreach(var item in File.ReadAllLines("dolgozok.txt"))
                 {
-                    Console.WriteLine("Mar letezik ilyen nevu dolgozo!");
-                    return;
+                    string[] adatok = item.Split(';');
+                    if (adatok[0] == nev)
+                        {
+                            Console.WriteLine("Már van ilyen nevű dolgozó!");
+                            return;
+                    }
                 }
             }
 
-            Console.Write("Kor: ");
+
+                Console.Write("Kor: ");
             string kor = Console.ReadLine();
             //item[1] = kor;
             Console.Write("Elvegzett munkak szama: ");
@@ -40,21 +57,58 @@
             Console.Write("Fizetes: ");
             string fizetes = Console.ReadLine();
             //item[3] = fizetes;
-            dolgozokListaja.Add(new string[] { nev, kor, munkakSzama, fizetes });
-        }   
+            //dolgozokListaja.Add(new string[] { nev, kor, munkakSzama, fizetes });
+            using (StreamWriter sw = new StreamWriter("dolgozok.txt", true))
+            {
+                if (ujFajl)
+                {
+                    sw.WriteLine("Nev;Kor;Elvegzett munkak szama;Fizetes");
+                }
+                
+                sw.WriteLine($"{nev};{kor};{munkakSzama};{fizetes}");
+            }
+
+        }
+        public void Kiiratas()
+        {
+            //Console.WriteLine("Kiiratas lefutott!");
+            List<string> FajlBeolvasas = new List<string>();
+            if (!File.Exists("dolgozok.txt"))
+            {
+                Console.WriteLine("Nincs meg a fájl!");
+                return;
+            }
+            else
+            {
+                StreamReader streamReader = new StreamReader("dolgozok.txt");
+                while (!streamReader.EndOfStream)
+                {
+                    FajlBeolvasas.Add(streamReader.ReadLine());
+                }
+                streamReader.Close();
+            }
+            foreach (var item in FajlBeolvasas)
+            {
+                Console.WriteLine(item);
+            }
+
+        }
 
 
 
 
-    }
+    }   
 
-    public class Statisztika
-    {
 
-    }
 
-    public class DolgozokAdatai
-    {
 
-    }
+
+
+    
+
+    //public class Statisztika
+    //{
+
+    //}
+
 }
