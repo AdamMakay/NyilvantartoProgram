@@ -1,4 +1,6 @@
-﻿namespace ConsoleApp1
+﻿using System.Threading.Channels;
+
+namespace ConsoleApp1
 {
     internal class Program
     {
@@ -10,29 +12,48 @@
             Console.WriteLine(File.ReadAllText("dolgozok.txt"));
             Dolgozok dolgozok = new Dolgozok();
            // dolgozok.dolgozokListaja.Add(new string[] { "Nev", ";Kor", ";Elvegzett munkak szama", ";Fizetes" });
-            string szam = Console.ReadLine().Trim();
-            if (szam == "1")
+            bool kilepes = true;
+            while (kilepes)
             {
-                dolgozok.UjDolgozo();
-            }
-            if (szam == "2")
-            {
-                dolgozok.Kiiratas();
-            }
-            if (szam == "3")
-            {
-                Console.Write("Töröles modja:\n1 - Osszes adat\n2 - Egy szemely adatai\n");
-                string torlesModja = Console.ReadLine().Trim();
-                if(torlesModja == "1")
+                string szam = Console.ReadLine().Trim();
+                if (szam == "1")
                 {
-                    File.WriteAllLines("dolgozok.txt",uresLista);
+                    dolgozok.UjDolgozo();
                 }
-                else if(torlesModja == "2")
+                if (szam == "2")
                 {
-                    dolgozok.NevTorles();
+                    dolgozok.Kiiratas();
                 }
-                else Console.WriteLine("Nincs ilyen opcio!");
-                
+                if (szam == "3")
+                {
+                    Console.Write("Töröles modja:\n1 - Osszes adat\n2 - Egy szemely adatai\n");
+                    string torlesModja = Console.ReadLine().Trim();
+                    if (torlesModja == "1")
+                    {
+                        File.WriteAllLines("dolgozok.txt", uresLista);
+                    }
+                    else if (torlesModja == "2")
+                    {
+                        dolgozok.NevTorles();
+                    }
+                    else Console.WriteLine("Nincs ilyen opcio!");
+
+                }
+                if (szam == "4")
+                {
+                    Statisztika statisztika = new Statisztika();
+                    Console.WriteLine("Melyik opciot szeretned:\n1-Atlag Eletkor\n2-Atlag Fizetes\n3-Osszes Elvegzett Munka");
+                    string valasztas = Console.ReadLine().Trim();
+                    if (valasztas == "1") Console.WriteLine("AZ atlagos eletkor: " + statisztika.AtlagKor("dolgozok.txt"));
+                    else if (valasztas == "2") Console.WriteLine("Az atlagos fizetes: " + statisztika.AtlagFizetes("dolgozok.txt"));
+                    else if (valasztas == "3") Console.WriteLine("Az osszes elvegzett munka: " + statisztika.OsszesElvegzettMunka("dolgozok.txt"));
+                    else Console.WriteLine("Nincs ilyen opcio!");
+
+                }
+                if (szam == "5")
+                {
+                    kilepes = false;
+                }
             }
             Console.ReadKey();
         }
@@ -62,16 +83,58 @@
                     }
                 }
             }
-
-
-            Console.Write("Kor: ");
-            string kor = Console.ReadLine();
+            bool ellenorzes;
+            int ellenorzesInt;
+            byte ellenorzesByte;
+            double ellenorzesDouble;
+            string kor;
+            while (true)
+            {
+                
+                Console.Write("Kor: ");
+                kor = Console.ReadLine();
+                ellenorzes = byte.TryParse(kor, out ellenorzesByte);
+                if (ellenorzes)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Hibás adat!");
+                }
+            }
+            string munkakSzama;
             //item[1] = kor;
-            Console.Write("Elvegzett munkak szama: ");
-            string munkakSzama = Console.ReadLine();
+            while (true)
+            {
+                Console.Write("Elvegzett munkak szama: ");
+                munkakSzama = Console.ReadLine();
+                ellenorzes = int.TryParse(munkakSzama, out ellenorzesInt);
+                if (ellenorzes)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Hibás adat!");
+                }
+            }
             //item[2] = munkakSzama;
-            Console.Write("Fizetes: ");
-            string fizetes = Console.ReadLine();
+            string fizetes;
+            while (true)
+            {
+                Console.Write("Fizetes: ");
+                fizetes = Console.ReadLine();
+                ellenorzes = double.TryParse(fizetes, out ellenorzesDouble);
+                if (ellenorzes)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Hibás adat!");
+                }
+            }
             //item[3] = fizetes;
             //dolgozokListaja.Add(new string[] { nev, kor, munkakSzama, fizetes });
             using (StreamWriter sw = new StreamWriter("dolgozok.txt", true))
@@ -81,7 +144,7 @@
                     sw.WriteLine("Nev;Kor;Elvegzett munkak szama;Fizetes");
                 }
 
-                sw.WriteLine($"{nev};{Convert.ToInt32(kor)};{Convert.ToInt32(munkakSzama)};{Convert.ToDouble(fizetes)}");
+                sw.WriteLine($"{nev};{kor};{munkakSzama};{fizetes}");
             }
 
         }
@@ -164,9 +227,51 @@
 
 
 
-    //public class Statisztika
-    //{
-
-        //}
-
+    public class Statisztika
+    {
+        private int db;
+        public int AtlagKor(string fajlNeve)
+        {
+            int korOsszesen = 0;
+            
+            StreamReader streamReader = new StreamReader(fajlNeve);
+            streamReader.ReadLine();
+            while (!streamReader.EndOfStream)
+            {
+               
+                string[] tomb = streamReader.ReadLine().Split(';');
+                korOsszesen += Convert.ToInt32(tomb[1]);
+                db++;
+            }
+            streamReader.Close();
+            return korOsszesen / db;
+        }
+        public double AtlagFizetes(string fajlNeve)
+        {
+            double fizetesOsszesen = 0;
+            StreamReader streamReader = new StreamReader(fajlNeve);
+            streamReader.ReadLine();
+            while (!streamReader.EndOfStream)
+            {
+                
+                string[] tomb = streamReader.ReadLine().Split(';');
+                fizetesOsszesen += Convert.ToDouble(tomb[3]);
+            }
+            streamReader.Close();
+            return fizetesOsszesen / db;
+        }
+        public int OsszesElvegzettMunka(string fajlNeve)
+        {
+            int elvegzettMunkaOsszesen = 0;
+            StreamReader streamReader = new StreamReader(fajlNeve);
+            streamReader.ReadLine();
+            while (!streamReader.EndOfStream)
+            {
+                string[] tomb = streamReader.ReadLine().Split(';');
+                elvegzettMunkaOsszesen += Convert.ToInt32(tomb[2]);
+            }
+            streamReader.Close();
+            return elvegzettMunkaOsszesen;
+        }
+    }
 }
