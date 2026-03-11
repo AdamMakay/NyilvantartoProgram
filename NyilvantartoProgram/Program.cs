@@ -6,31 +6,71 @@
         {
          
             adatok BeirtAdatok;
-            BeirtAdatok = new adatok(EllVaroAdatok()[0], EllVaroAdatok()[1], EllVaroAdatok()[2], EllVaroAdatok()[3], EllVaroAdatok()[4], EllVaroAdatok()[5]);
+            if(!File.Exists("adatok.txt"))
+            {
+                File.WriteAllText("adatok.txt", "Nev;Kor;Cim;SzolgalatiIdo;Szakma;Fizetes\n");
+            }
+            StreamWriter sw;
+            Console.Write("1 - Adatok megadása\n");
+            string valasz = Console.ReadLine();
+            if(valasz == "1")
+            {
+                BeirtAdatok = EllVaroAdatok();
+                sw= new StreamWriter("adatok.txt", true);
+                sw.WriteLine($"{BeirtAdatok.nev};{BeirtAdatok.kor};{BeirtAdatok.cim};{BeirtAdatok.szolgalatiIdo};{BeirtAdatok.szakma};{BeirtAdatok.fizetes}");
+
+            }
         }
-        static string[] EllVaroAdatok()
+        static adatok EllVaroAdatok()
         {
-            string[] EllVaroAdatok = new string[6];
+            
 
             Console.Write("Adja meg a dolgozó nevét: ");
-            EllVaroAdatok[0] = Console.ReadLine();
+            string nev = Console.ReadLine();
+            while (nev == null)
+            {
+                Console.WriteLine("Hibás nev!");
+                Console.Write("Adja meg újra az életkort: ");
+                nev = Console.ReadLine();
+            }
 
             Console.Write("Adja meg a dolgozó életkorát: ");
-            EllVaroAdatok[1] = Console.ReadLine();
+            string kor = Console.ReadLine();
+            int korInt;
+            while (!int.TryParse(kor, out korInt) || korInt < 7 || korInt > 65)
+            {
+                Console.WriteLine("Hibás életkor!");
+                Console.Write("Adja meg újra az életkort: ");
+                kor = Console.ReadLine();
+            }
 
             Console.Write("Adja meg a dolgozó címét: ");
-            EllVaroAdatok[2] = Console.ReadLine();
+            string cim = Console.ReadLine();
 
             Console.Write("Adja meg a dolgozó szolgálati idejét: ");
-            EllVaroAdatok[3] = Console.ReadLine();
+            string szolgalatiIdo = Console.ReadLine();
+            int szolgalatiInt;
+            while (!int.TryParse(szolgalatiIdo, out szolgalatiInt) || szolgalatiInt <= 0)
+            {
+                Console.WriteLine("Hibás szolgálati idő!");
+                Console.Write("Adja meg újra: ");
+                szolgalatiIdo = Console.ReadLine();
+            }
 
             Console.Write("Adja meg a dolgozó szakmáját: ");
-            EllVaroAdatok[4] = Console.ReadLine();
+            string szakma = Console.ReadLine();
 
             Console.Write("Adja meg a dolgozó fizetését: ");
-            EllVaroAdatok[5] = Console.ReadLine();
+            string fizetes = Console.ReadLine();
+            int fizetesInt;
+            while (!int.TryParse(fizetes, out fizetesInt) || fizetesInt < 0)
+            {
+                Console.WriteLine("Hibás fizetés!");
+                Console.Write("Adja meg újra a fizetést: ");
+                fizetes = Console.ReadLine();
+            }
 
-            return EllVaroAdatok;
+            return new adatok(nev,kor,cim,szolgalatiIdo,szakma,fizetes);
         }
     }
 }
