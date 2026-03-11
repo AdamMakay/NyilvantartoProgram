@@ -11,14 +11,14 @@ namespace NyilvantartoProgram
         private string nev;
         private int id;
         private string cim;
-        private int szolgalatiIdo;
+        private string szolgalatiIdo;
         
-        private int kor;
+        private string kor;
         private string szakma;
-        private int fizetes;
+        private string fizetes;
 
 
-        public adatok(int id, string nev, int kor, string cim,int szolgalatiido,  string szakma, int fizetes)
+        public adatok(int id, string nev, string kor, string cim,string szolgalatiido,  string szakma, string fizetes)
         {
             this.nev = nev;
             this.id = id;
@@ -34,15 +34,15 @@ namespace NyilvantartoProgram
         public void ellenorzes(List<string> EllVaroAdatok)
         {
                 
-                if (kor < 18 || kor > 65)
+                if (int.Parse(kor)  < 18 || int.Parse(kor) > 65)
                 {
                     Console.WriteLine("Hibás életkor: " + this.nev);
                 }
-                if (fizetes < 0)
+                if (int.Parse(fizetes) < 0)
                 {
                     Console.WriteLine("Hibás fizetés: " + this.nev);
                 }
-                if (szolgalatiIdo < 0)
+                if (int.Parse(szolgalatiIdo) < 0)
                 {
                     Console.WriteLine("Hibás szolgálati idő: " + this.nev);
             }
