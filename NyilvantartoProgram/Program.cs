@@ -17,7 +17,7 @@
             {
                 BeirtAdatok = EllVaroAdatok();
                 sw= new StreamWriter("adatok.txt", true);
-                sw.WriteLine($"{BeirtAdatok.nev};{BeirtAdatok.kor};{BeirtAdatok.cim};{BeirtAdatok.szolgalatiIdo};{BeirtAdatok.szakma};{BeirtAdatok.fizetes}");
+                sw.WriteLine($"{BeirtAdatok.Nev};{BeirtAdatok.Kor};{BeirtAdatok.Cim};{BeirtAdatok.SzolgalatiIdo};{BeirtAdatok.Szakma};{BeirtAdatok.Fizetes}");
 
             }
         }
@@ -27,12 +27,11 @@
 
             Console.Write("Adja meg a dolgozó nevét: ");
             string nev = Console.ReadLine();
-            while (nev == null)
-            {
-                Console.WriteLine("Hibás nev!");
-                Console.Write("Adja meg újra az életkort: ");
-                nev = Console.ReadLine();
-            }
+
+            Console.WriteLine("Hibás nev!");
+            Console.Write("Adja meg újra az életkort: ");
+            nev = Console.ReadLine();
+            
 
             Console.Write("Adja meg a dolgozó életkorát: ");
             string kor = Console.ReadLine();
