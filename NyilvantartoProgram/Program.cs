@@ -1,4 +1,5 @@
-﻿namespace NyilvantartoProgram
+﻿
+namespace NyilvantartoProgram
 {
     internal class Program
     {
@@ -18,9 +19,27 @@
                 BeirtAdatok = EllVaroAdatok();
                 sw= new StreamWriter("adatok.txt", true);
                 sw.WriteLine($"{BeirtAdatok.Nev};{BeirtAdatok.Kor};{BeirtAdatok.Cim};{BeirtAdatok.SzolgalatiIdo};{BeirtAdatok.Szakma};{BeirtAdatok.Fizetes}");
-
+                sw.Close();
+            }
+            if (valasz == "2")
+            {
+                AdatokOlvasasa();
             }
         }
+
+        private static void AdatokOlvasasa()
+        {
+           StreamReader sr = new StreamReader("adatok.txt");
+            string elsoSor = sr.ReadLine();
+            Console.WriteLine(elsoSor);
+            while (!sr.EndOfStream)
+            {
+                string sor = sr.ReadLine();
+                Console.WriteLine(sor);
+            }
+            sr.Close();
+        }
+
         static adatok EllVaroAdatok()
         {
             
@@ -28,9 +47,8 @@
             Console.Write("Adja meg a dolgozó nevét: ");
             string nev = Console.ReadLine();
 
-            Console.WriteLine("Hibás nev!");
-            Console.Write("Adja meg újra az életkort: ");
-            nev = Console.ReadLine();
+            
+
             
 
             Console.Write("Adja meg a dolgozó életkorát: ");
