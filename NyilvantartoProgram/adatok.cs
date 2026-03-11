@@ -31,21 +31,40 @@ namespace NyilvantartoProgram
 
         public void ellenorzes(List<string> EllVaroAdatok)
         {
-                
+            int ellInt;
+            if(string.IsNullOrEmpty(nev))
+            {
+            throw new ArgumentException("Rossz nev! >:[");
+            }
+
+           if(int.TryParse(this.kor,out ellInt))
+           { 
                 if (int.Parse(kor)  < 18 || int.Parse(kor) > 65)
                 {
                     Console.WriteLine("Hibás életkor: " + this.nev);
                 }
+           }
+           else throw new ArgumentException("Rossz kor! >:[");
+
+           if(int.TryParse(this.fizetes, out ellInt))
+            { 
+
                 if (int.Parse(fizetes) < 0)
                 {
                     Console.WriteLine("Hibás fizetés: " + this.nev);
                 }
+            }
+           else throw new ArgumentException("Rossz fizetés! >:[");
+            if (int.TryParse(this.szolgalatiIdo, out ellInt))
+            {
                 if (int.Parse(szolgalatiIdo) < 0)
                 {
                     Console.WriteLine("Hibás szolgálati idő: " + this.nev);
-            }
-        }
+                }
 
+            }
+            else throw new ArgumentException("Rossz szolgálati idő! >:[");
+        }
 
 
     }
