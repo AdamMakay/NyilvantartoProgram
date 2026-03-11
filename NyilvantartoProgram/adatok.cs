@@ -34,5 +34,8 @@ namespace NyilvantartoProgram
         public string Kor { get => kor;}
         public string Szakma { get => szakma; }
         public string Fizetes { get => fizetes;}
+
+
+
     }
 }

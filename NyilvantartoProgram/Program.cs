@@ -6,7 +6,7 @@ namespace NyilvantartoProgram
         static void Main(string[] args)
         {
          
-            adatok BeirtAdatok;
+            adatok BeirtAdatok = null;
             if(!File.Exists("adatok.txt"))
             {
                 File.WriteAllText("adatok.txt", "Nev;Kor;Cim;SzolgalatiIdo;Szakma;Fizetes\n");
@@ -23,21 +23,31 @@ namespace NyilvantartoProgram
             }
             if (valasz == "2")
             {
-                AdatokOlvasasa();
+                Console.WriteLine(File.ReadAllText("adatok.txt"));
+                
+            }
+            if (valasz == "3")
+            {
+                Console.Write("nev: ");
+                string adatok = Statisztika(Console.ReadLine());
+                Console.WriteLine(adatok);
             }
         }
 
-        private static void AdatokOlvasasa()
+        static string Statisztika(string nev)
         {
-           StreamReader sr = new StreamReader("adatok.txt");
-            string elsoSor = sr.ReadLine();
-            Console.WriteLine(elsoSor);
+            StreamReader sr = new StreamReader("adatok.txt");
             while (!sr.EndOfStream)
             {
                 string sor = sr.ReadLine();
-                Console.WriteLine(sor);
+                string[] adatok = sor.Split(';');
+                if (adatok[0] == nev)
+                {
+                    return sor;
+                }
             }
             sr.Close();
+            return "Nincs ilyen dolgozó!";
         }
 
         static adatok EllVaroAdatok()
