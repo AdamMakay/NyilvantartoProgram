@@ -18,14 +18,12 @@ namespace NyilvantartoProgram
         private string fizetes;
 
 
-        public adatok( string nev, string kor, string cim,string szolgalatiido,  string szakma, string fizetes)
+        public adatok(string nev, string kor, string cim, string szolgalatiido, string szakma, string fizetes)
         {
             this.nev = nev;
-            this.id = id;
-            this.cim = cim;
-            
-            this.szolgalatiIdo = szolgalatiido;
             this.kor = kor;
+            this.cim = cim;
+            this.szolgalatiIdo = szolgalatiido;
             this.szakma = szakma;
             this.fizetes = fizetes;
         }

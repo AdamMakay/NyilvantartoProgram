@@ -4,10 +4,11 @@
     {
         static void Main(string[] args)
         {
-            adatok adatok;
-            adatok = new adatok(EllVaroAdatok[0],)
+         
+            adatok BeirtAdatok;
+            BeirtAdatok = new adatok(EllVaroAdatok()[0], EllVaroAdatok()[1], EllVaroAdatok()[2], EllVaroAdatok()[3], EllVaroAdatok()[4], EllVaroAdatok()[5]);
         }
-        public string[] EllVaroAdatok()
+        static string[] EllVaroAdatok()
         {
             string[] EllVaroAdatok = new string[6];
 
