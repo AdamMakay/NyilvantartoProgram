@@ -9,7 +9,7 @@ namespace NyilvantartoProgram
     internal class adatok
     {
         private string nev;
-        private int id;
+        
         private string cim;
         private string szolgalatiIdo;
         
@@ -18,7 +18,7 @@ namespace NyilvantartoProgram
         private string fizetes;
 
 
-        public adatok(int id, string nev, string kor, string cim,string szolgalatiido,  string szakma, string fizetes)
+        public adatok( string nev, string kor, string cim,string szolgalatiido,  string szakma, string fizetes)
         {
             this.nev = nev;
             this.id = id;

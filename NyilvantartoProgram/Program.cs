@@ -4,25 +4,32 @@
     {
         static void Main(string[] args)
         {
+            adatok adatok;
+            adatok = new adatok(EllVaroAdatok[0],)
         }
-
-        public List<string> EllVaroAdatok()
+        public string[] EllVaroAdatok()
         {
-            List<string> EllVaroAdatok = new List<string>();
-            //int id, string nev, int kor, string cim,int szolgalatiido,  string szakma, int fizetes
+            string[] EllVaroAdatok = new string[6];
+
             Console.Write("Adja meg a dolgozó nevét: ");
-            string nev = Console.ReadLine();
-            EllVaroAdatok.Add(nev);
+            EllVaroAdatok[0] = Console.ReadLine();
+
             Console.Write("Adja meg a dolgozó életkorát: ");
-            string kor = Console.ReadLine();
+            EllVaroAdatok[1] = Console.ReadLine();
+
             Console.Write("Adja meg a dolgozó címét: ");
-            string cim = Console.ReadLine();
+            EllVaroAdatok[2] = Console.ReadLine();
+
             Console.Write("Adja meg a dolgozó szolgálati idejét: ");
-            string szolgalatiIdo = Console.ReadLine();
+            EllVaroAdatok[3] = Console.ReadLine();
+
             Console.Write("Adja meg a dolgozó szakmáját: ");
-            string szakma = Console.ReadLine();
+            EllVaroAdatok[4] = Console.ReadLine();
+
             Console.Write("Adja meg a dolgozó fizetését: ");
-            string fizetes = Console.ReadLine();
+            EllVaroAdatok[5] = Console.ReadLine();
+
+            return EllVaroAdatok;
         }
     }
 }
