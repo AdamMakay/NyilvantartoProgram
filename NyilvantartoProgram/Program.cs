@@ -17,9 +17,9 @@ namespace NyilvantartoProgram
             while (fut)
             {
                 Console.Clear();
-                int dolgozokSzama = File.ReadAllLines("adatok.txt").Length - 1;
+                int dolgozoSzam = File.ReadAllLines("adatok.txt").Length - 1;
                 Console.Write("\n\n\n======== DOLGOZÓI NYILVÁNTARTÓ RENDSZER ========\n");
-                Console.WriteLine($"Jelenleg {dolgozokSzama} dolgozó van az adatbázisban.");
+                Console.WriteLine($"Jelenleg {dolgozoSzam} dolgozó van az adatbázisban.");
                 Console.Write("\nVálassza ki hogy mit szeretne csinálni:\n");
                 Console.WriteLine("------------------------------------------------");
                 Console.Write("1 - Új dolgozó felvétele\t\t\t|\n");
@@ -55,12 +55,67 @@ namespace NyilvantartoProgram
                     Console.Write("3 - Részleg keresése\n");
                     string valasz1 = Console.ReadLine();
 
-                    if (valasz1 == "2")
+                    if (valasz1 == "1")
+                    {
+                        string[] sorok = File.ReadAllLines("adatok.txt");
+                        if (sorok.Length <= 1)
+                        {
+                            Console.WriteLine("\nNincsenek dolgozók az adatbázisban!");
+                        }
+                        else
+                        {
+                            int osszFizetes = 0;
+                            int osszSzolgalatiIdo = 0;
+                            int dolgozokSzama = sorok.Length - 1;
+
+                            for (int i = 1; i < sorok.Length; i++)
+                            {
+                                string[] adatok = sorok[i].Split(';');
+                                osszSzolgalatiIdo += int.Parse(adatok[3]);
+                                osszFizetes += int.Parse(adatok[5]);
+                            }
+
+                            double atlagFizetes = (double)osszFizetes / dolgozokSzama;
+                            double atlagSzolgalatiIdo = (double)osszSzolgalatiIdo / dolgozokSzama;
+
+                            Console.WriteLine($"\nÁtlag fizetés: {atlagFizetes:F0}");
+                            Console.WriteLine($"Átlag szolgálati idő: {atlagSzolgalatiIdo:F2}\n");
+                        }
+                        Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
+                        Console.ReadKey();
+                    }
+                    else if (valasz1 == "2")
                     {
                         Console.Write("Adja meg a lekérdezendő dolgozó nevét: ");
                         string adatok = Statisztika(Console.ReadLine());
                         Console.WriteLine($"\nNév Kor Cím SzolgalatiIdő Szakma Fizetés\n{adatok.Replace(";"," ")}\n");
                         Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
+                        Console.ReadKey();
+                    }
+                    else if (valasz1 == "3")
+                    {
+                        Console.Write("Adja meg a részleg nevét: ");
+                        string reszleg = Console.ReadLine();
+
+                        string[] sorok = File.ReadAllLines("adatok.txt");
+                        bool talalat = false;
+
+                        Console.WriteLine($"\nDolgozók a(z) {reszleg} részlegben:");
+
+                        for (int i = 1; i < sorok.Length; i++)
+                        {
+                            string[] adatok = sorok[i].Split(';');
+                            if (adatok[4] == reszleg)
+                            {
+                                Console.WriteLine(string.Join(" ", adatok));
+                                talalat = true;
+                            }
+                        }
+
+                        if (!talalat)
+                            Console.WriteLine("\nNincs ilyen részleg!");
+
+                        Console.WriteLine("\nNyomjon meg egy gombot a visszalépéshez...");
                         Console.ReadKey();
                     }
                 }
