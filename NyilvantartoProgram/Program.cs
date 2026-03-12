@@ -36,46 +36,25 @@ namespace NyilvantartoProgram
                     sw.WriteLine($"{BeirtAdatok.Nev};{BeirtAdatok.Kor};{BeirtAdatok.Cim};{BeirtAdatok.SzolgalatiIdo};{BeirtAdatok.Szakma};{BeirtAdatok.Fizetes}");
                     sw.Close();
                     Console.Write("Dolgozó sikeresen hozzáadva\n\n");
-                    Console.Write("1 - Visszalépés\n");
-                    Console.Write("2 - Kilépés\n");
-                    string valasz1 = Console.ReadLine();
-                    //visszalépés
-                    if (valasz1 == "2")
-                    {
-                        Console.Write("\n\nViszont látásra!");
-                        fut = false;
-                    }
+                    Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
+                    Console.ReadKey();
                 }
-                if (valasz == "2")
+                else if (valasz == "2")
                 {
                     Console.WriteLine(File.ReadAllText("adatok.txt"));
-                    Console.Write("1 - Visszalépés\n");
-                    Console.Write("2 - Kilépés\n");
-                    string valasz1 = Console.ReadLine();
-                    //visszalépés
-                    if (valasz1 == "2")
-                    {
-                        Console.Write("\n\nViszont látásra!");
-                        fut = false;
-                    }
+                    Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
+                    Console.ReadKey();
 
                 }
-                if (valasz == "3")
+                else if (valasz == "3")
                 {
                     Console.Write("Adja meg a lekérdezendő dolgozó nevét: ");
                     string adatok = Statisztika(Console.ReadLine());
                     Console.WriteLine(adatok);
-                    Console.Write("1 - Visszalépés\n");
-                    Console.Write("2 - Kilépés\n");
-                    string valasz1 = Console.ReadLine();
-                    //visszalépés
-                    if (valasz1 == "2")
-                    {
-                        Console.Write("\n\nViszont látásra!");
-                        fut = false;
-                    }
+                    Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
+                    Console.ReadKey();
                 }
-                if (valasz == "4")
+                else if (valasz == "4")
                 {
                     Console.Write("Mit szeretne csinálni?\n");
                     Console.Write("1 - Egy dolgozó törlése\n");
@@ -89,21 +68,18 @@ namespace NyilvantartoProgram
                         string nev = Console.ReadLine();
                         DolgozoTorles(nev);
                     }
-                    if (torlesValasz == "2")
+                    else if (torlesValasz == "2")
                     {
                         OsszesTorles();
                     }
-                    Console.Write("1 - Visszalépés\n");
-                    Console.Write("2 - Kilépés\n");
-                    string valasz1 = Console.ReadLine();
-                    //visszalépés
-                    if (valasz1 == "2")
+                    else
                     {
-                        Console.Write("\n\nViszont látásra!");
-                        fut = false;
+                        Console.WriteLine("\n\nNincs ilyen opció!");
                     }
+                    Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
+                    Console.ReadKey();
                 }
-                if (valasz == "5")
+                else if (valasz == "5")
                 {
                     Console.Write("\n\nViszont látásra!");
                     fut = false;
