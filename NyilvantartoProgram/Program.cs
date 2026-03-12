@@ -17,8 +17,9 @@ namespace NyilvantartoProgram
             while (fut)
             {
                 Console.Clear();
-
+                int dolgozokSzama = File.ReadAllLines("adatok.txt").Length - 1;
                 Console.Write("\n\n\n======== DOLGOZÓI NYILVÁNTARTÓ RENDSZER ========\n");
+                Console.WriteLine($"Jelenleg {dolgozokSzama} dolgozó van az adatbázisban.");
                 Console.Write("\nVálassza ki hogy mit szeretne csinálni:\n");
                 Console.WriteLine("------------------------------------------------");
                 Console.Write("1 - Új dolgozó felvétele\t\t\t|\n");
@@ -41,18 +42,27 @@ namespace NyilvantartoProgram
                 }
                 else if (valasz == "2")
                 {
-                    Console.WriteLine(File.ReadAllText("adatok.txt"));
+                    Console.WriteLine($"\n{File.ReadAllText("adatok.txt").Replace(";", " ")}");
                     Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
                     Console.ReadKey();
 
                 }
                 else if (valasz == "3")
                 {
-                    Console.Write("Adja meg a lekérdezendő dolgozó nevét: ");
-                    string adatok = Statisztika(Console.ReadLine());
-                    Console.WriteLine(adatok);
-                    Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
-                    Console.ReadKey();
+                    Console.Write("\nMiről szeretne statisztikát?\n");
+                    Console.Write("1 - Átlag lekérdezése\n");
+                    Console.Write("2 - Dolgozó keresése\n");
+                    Console.Write("3 - Részleg keresése\n");
+                    string valasz1 = Console.ReadLine();
+
+                    if (valasz1 == "2")
+                    {
+                        Console.Write("Adja meg a lekérdezendő dolgozó nevét: ");
+                        string adatok = Statisztika(Console.ReadLine());
+                        Console.WriteLine($"\nNév Kor Cím SzolgalatiIdő Szakma Fizetés\n{adatok.Replace(";"," ")}\n");
+                        Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
+                        Console.ReadKey();
+                    }
                 }
                 else if (valasz == "4")
                 {
@@ -103,7 +113,7 @@ namespace NyilvantartoProgram
                 }
             }
             sr.Close();
-            return "Nincs ilyen dolgozó!";
+            return "\n\nNincs ilyen dolgozó!";
         }
 
         static adatok EllVaroAdatok()
