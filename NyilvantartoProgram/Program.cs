@@ -12,10 +12,14 @@ namespace NyilvantartoProgram
                 File.WriteAllText("adatok.txt", "Név;Kor;Cím;SzolgalatiIdő;Szakma;Fizetés\n");
             }
             StreamWriter sw;
-            Console.Write("1 - Új dolgozó felvétele\n");
-            Console.Write("2 - Dolgozók listázása\n");
-            Console.Write("3 - Statisztikák\n");
-            Console.Write("4 - Dolgozó törlése\n");
+            Console.Write("\n\n\nVálassza ki hogy mit szeretne csinálni:\n");
+            Console.WriteLine("------------------------------------------------");
+            Console.Write("1 - Új dolgozó felvétele\t\t\t|\n");
+            Console.Write("2 - Dolgozók listázása\t\t\t\t|\n");
+            Console.Write("3 - Statisztikák\t\t\t\t|\n");
+            Console.Write("4 - Dolgozó törlése\t\t\t\t|\n");
+            Console.Write("5 - Kilépés\t\t\t\t\t|\n");
+            Console.WriteLine("------------------------------------------------\n");
             string valasz = Console.ReadLine();
             if (valasz == "1")
             {
@@ -53,6 +57,10 @@ namespace NyilvantartoProgram
                 {
                     OsszesTorles();
                 }
+            }
+            if (valasz == "5")
+            {
+                Console.Write("Viszont látásra!");
             }
         }
 
