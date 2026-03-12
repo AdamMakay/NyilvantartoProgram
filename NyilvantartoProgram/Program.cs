@@ -49,6 +49,10 @@ namespace NyilvantartoProgram
                     string nev = Console.ReadLine();
                     DolgozoTorles(nev);
                 }
+                if (torlesValasz == "2")
+                {
+                    OsszesTorles();
+                }
             }
         }
 
@@ -84,7 +88,7 @@ namespace NyilvantartoProgram
             Console.Write("Adja meg a dolgozó életkorát: ");
             string kor = Console.ReadLine();
             int korInt;
-            while (!int.TryParse(kor, out korInt) || korInt < 7 || korInt > 65)
+            while (!int.TryParse(kor, out korInt) || korInt < 17 || korInt > 65)
             {
                 Console.WriteLine("Hibás életkor!");
                 Console.Write("Adja meg újra az életkort: ");
@@ -136,7 +140,12 @@ namespace NyilvantartoProgram
 
             File.WriteAllLines("adatok.txt", ujSorok);
 
-            Console.WriteLine("Dolgozó törölve.");
+            Console.WriteLine("Dolgozó törölve");
+        }
+        static void OsszesTorles()
+        {
+            File.WriteAllText("adatok.txt", "Név;Kor;Cím;SzolgalatiIdő;Szakma;Fizetés\n");
+            Console.WriteLine("Minden dolgozó törölve");
         }
     }
 }
