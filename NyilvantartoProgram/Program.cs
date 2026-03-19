@@ -12,10 +12,10 @@ namespace NyilvantartoProgram
             {
                 File.WriteAllText("adatok.txt", "Név;Kor;Cím;SzolgalatiIdő;Szakma;Fizetés\n");
             }
-            StreamWriter sw;
 
             while (fut)
             {
+                //Kinézet------------------------------------------------------------------------------------------------------------------------
                 Console.Clear();
                 int dolgozoSzam = File.ReadAllLines("adatok.txt").Length - 1;
                 Console.Write("\n\n\n======== DOLGOZÓI NYILVÁNTARTÓ RENDSZER ========\n");
@@ -30,16 +30,24 @@ namespace NyilvantartoProgram
                 Console.WriteLine("------------------------------------------------\n");
                 Console.Write("Adja meg a választott számot: ");
                 string valasz = Console.ReadLine();
+
+
+
+                //Dolgozó hozzáadása-------------------------------------------------------------------------------------------------------------
                 if (valasz == "1")
                 {
                     BeirtAdatok = EllVaroAdatok();
-                    sw = new StreamWriter("adatok.txt", true);
-                    sw.WriteLine($"{BeirtAdatok.Nev};{BeirtAdatok.Kor};{BeirtAdatok.Cim};{BeirtAdatok.SzolgalatiIdo};{BeirtAdatok.Szakma};{BeirtAdatok.Fizetes}");
-                    sw.Close();
+                    using (StreamWriter sw = new StreamWriter("adatok.txt", true))
+                    {
+                        sw.WriteLine($"{BeirtAdatok.Nev};{BeirtAdatok.Kor};{BeirtAdatok.Cim};{BeirtAdatok.SzolgalatiIdo};{BeirtAdatok.Szakma};{BeirtAdatok.Fizetes}");
+                    }
                     Console.Write("Dolgozó sikeresen hozzáadva\n\n");
                     Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
                     Console.ReadKey();
                 }
+
+
+                //Dolgozók listázása-------------------------------------------------------------------------------------------------------------
                 else if (valasz == "2")
                 {
                     Console.WriteLine($"\n{File.ReadAllText("adatok.txt").Replace(";", " ")}");
@@ -47,6 +55,9 @@ namespace NyilvantartoProgram
                     Console.ReadKey();
 
                 }
+
+
+                //Statisztikák-------------------------------------------------------------------------------------------------------------
                 else if (valasz == "3")
                 {
                     Console.Write("\nMiről szeretne statisztikát?\n");
@@ -119,6 +130,10 @@ namespace NyilvantartoProgram
                         Console.ReadKey();
                     }
                 }
+
+
+
+                //Dolgozók törlése-------------------------------------------------------------------------------------------------------------
                 else if (valasz == "4")
                 {
                     Console.Write("Mit szeretne csinálni?\n");
@@ -144,6 +159,11 @@ namespace NyilvantartoProgram
                     Console.WriteLine("Nyomjon meg egy gombot a visszalépéshez...");
                     Console.ReadKey();
                 }
+
+
+
+
+                //Kilépés-------------------------------------------------------------------------------------------------------------
                 else if (valasz == "5")
                 {
                     Console.Write("\n\nViszont látásra!");
@@ -154,20 +174,22 @@ namespace NyilvantartoProgram
         }
 
 
-
+        //Dolgozó adatai-------------------------------------------------------------------------------------------------------------
         static string Statisztika(string nev)
         {
-            StreamReader sr = new StreamReader("adatok.txt");
-            while (!sr.EndOfStream)
+            using (StreamReader sr = new StreamReader("adatok.txt"))
             {
-                string sor = sr.ReadLine();
-                string[] adatok = sor.Split(';');
-                if (adatok[0] == nev)
+                while (!sr.EndOfStream)
                 {
-                    return sor;
+                    string sor = sr.ReadLine();
+                    string[] adatok = sor.Split(';');
+                    if (adatok[0] == nev)
+                    {
+                        return sor;
+                    }
                 }
             }
-            sr.Close();
+
             return "\n\nNincs ilyen dolgozó!";
         }
 
@@ -220,6 +242,10 @@ namespace NyilvantartoProgram
 
             return new adatok(nev, kor, cim, szolgalatiIdo, szakma, fizetes);
         }
+
+
+
+        //Törlés funkciók-------------------------------------------------------------------------------------------------------------
         static void DolgozoTorles(string nev)
         {
             List<string> sorok = new List<string>(File.ReadAllLines("adatok.txt"));
